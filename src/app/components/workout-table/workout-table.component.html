@@ -1,0 +1,57 @@
+<div class="p-4">
+  <h2 class="text-xl font-bold mb-4">Workout Table</h2>
+  <div class="overflow-x-auto">
+    <div class="flex flex-row w-full justify-between bg-gray-100 p-4">
+     
+      <div class="mb-2">
+        <label for="search" class="block text-sm font-sm py-2 text-gray-700">Search by Username</label>
+        <input id="search" type="text" pInputText [(ngModel)]="searchText" (ngModelChange)="onSearchChange()" placeholder="Search..." />
+      </div>
+      
+      
+      <div class="">
+        <label for="filter" class="block py-1 text-sm font-medium text-gray-700">Filter by Workout Type</label>
+        <p-dropdown 
+          id="filter" 
+          [options]="workoutTypes" 
+          [(ngModel)]="selectedWorkoutType" 
+          [showClear]="true"
+          (ngModelChange)="onFilterChange()"
+          placeholder="Select Workout Type"
+          >
+        </p-dropdown>
+      </div>
+    </div>
+    <table class="min-w-full bg-white border border-gray-200 shadow-lg z-10 relative">
+      <thead class="bg-gray-100">
+        <tr>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">S.No</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">Username</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">Workout Type</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">Duration (minutes)</th>
+          <th class="py-2 px-4 border-b border-gray-200 text-left">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let workout of paginatedWorkouts" class="hover:bg-gray-50">
+          <td class="py-2 px-4 border-b border-gray-200">{{workout.sno}}</td>
+          <td class="py-2 px-4 border-b border-gray-200">{{workout.username}}</td>
+          <td class="py-2 px-4 border-b border-gray-200">{{workout.workout_type}}</td>
+          <td class="py-2 px-4 border-b border-gray-200">{{workout.duration}}</td>
+          <td class="py-2 px-4 border-b border-gray-200 text-center">
+            <button (click)="deleteWorkout(workout.sno)" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+ 
+  <p-paginator 
+    [rows]="5" 
+    [totalRecords]="workouts.length" 
+    (onPageChange)="paginate($event)" 
+    >
+  </p-paginator>
+
+</div>
